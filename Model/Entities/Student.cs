@@ -12,7 +12,7 @@ namespace AcademyProject_API.Model.Entities
         public string? FName { get; set; }
         public string? LName { get; set; }
 
-        public ICollection<Section> sections { get; set; } = new List<Section>();
+        public ICollection<Section> Sections { get; set; } = new List<Section>();
 
     }
 }

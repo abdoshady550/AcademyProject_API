@@ -46,7 +46,7 @@ namespace AcademyProject_API.Model.Data.configurations
                 .IsRequired();
 
             builder.HasMany(e => e.Students)
-                .WithMany(e => e.sections)
+                .WithMany(e => e.Sections)
                 .UsingEntity<Enrollment>();
             builder.ToTable("Sections");
 
