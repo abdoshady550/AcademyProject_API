@@ -1,6 +1,9 @@
 using System.Text.Json.Serialization;
 using AcademyProject_API.Model.Data;
+using Asp.net_Web_Api.Meddlewares;
 using Microsoft.EntityFrameworkCore;
+using Movie_Api.Middleware;
+using Movie_Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,13 +14,14 @@ builder.Services.AddControllers()
                     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
                     options.JsonSerializerOptions.WriteIndented = true;
                 });
+builder.Services.AddMemoryCache();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>
 (option => option.UseSqlServer((builder.Configuration.GetConnectionString("DefaultConnection"))));
-
+builder.Services.AddScoped<IStudentService, StudentService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,8 +30,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<RateLimiterMiddleware>();
 
 app.UseAuthorization();
 
