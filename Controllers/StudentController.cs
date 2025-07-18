@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Movie_Api.Handler;
 using Movie_Api.Mappers;
 using Movie_Api.Services;
-using static AcademyProject_API.Model.Dtos.StudentDto;
 
 namespace AcademyProject_API.Controllers
 {
