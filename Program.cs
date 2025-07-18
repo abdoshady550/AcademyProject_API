@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using AcademyProject_API.Model.Data;
+using AcademyProject_API.Services;
 using Asp.net_Web_Api.Meddlewares;
 using Microsoft.EntityFrameworkCore;
 using Movie_Api.Middleware;
@@ -22,6 +23,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>
 (option => option.UseSqlServer((builder.Configuration.GetConnectionString("DefaultConnection"))));
 builder.Services.AddScoped<IStudentService, StudentService>();
+
+builder.Services.AddScoped(typeof(IGenaricRepo<>), typeof(GenaricService<>));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
